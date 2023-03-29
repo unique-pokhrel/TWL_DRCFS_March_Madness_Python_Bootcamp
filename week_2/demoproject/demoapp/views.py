@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import TestDb, NewUser
+from .models import TestDb, NewUser, UserMedia
 
 def main(request):
     return HttpResponse("Hello world!")
@@ -27,7 +27,6 @@ def good_form(request):
         #eutainstance.firstname=request.POST['first_name']
         #eutainstance.lastname=request.POST['last_name']
         #eutainstance.email=request.POST['email']
-        print(len(request.POST['first_name']))
 
         if len(request.POST['first_name'])==0:
             return HttpResponse("Error occured!!")
@@ -44,6 +43,22 @@ def good_form(request):
 
     return render(request, 'goodlookingform.html')
 
+def fileupload(request):
+    if request.method == "POST":
+        backendmedia=UserMedia()
+        media=request.POST['files']
+        backendmedia.file=media
+        backendmedia.save()
 
+    return render(request, 'fileupload.html')
+
+
+def contextplaying(request):
+    users=NewUser()
+    print(users.firstname)
+
+    a={"name":"Nabin", "items":['OOP', 'Django', 'networking', 'otherstuffs'], }
+
+    return render(request, 'contextplaying.html', a)
 
 
